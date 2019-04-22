@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RespuestaMDB } from '../interfaces/interfaces';
+import { RespuestaMDB, PeliculaDetalle, Actores } from '../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
 const URL = environment.url;
@@ -12,6 +12,8 @@ const language = 'es';
 })
 export class MoviesService {
 
+  private popularesPage = 0;
+
   constructor(private http: HttpClient) { }
 
   private ejecutarQuery<T>( query: string){
@@ -19,12 +21,14 @@ export class MoviesService {
       query = URL + query;
 
       query = query + `&api_key=${apiKey}&language=${language}&include_image_language=${language}`;
-
+        // console.log(query);
+        
       return this.http.get<T>(query);
   }
 
   getPopulares() {
-    const query = '/discover/movie?sort_by=popularity.desc';
+    this.popularesPage++;
+    const query = `/discover/movie?sort_by=popularity.desc&page=${this.popularesPage}`;
     return this.ejecutarQuery<RespuestaMDB>( query );
 
   }
@@ -49,5 +53,17 @@ export class MoviesService {
 
     return this.ejecutarQuery<RespuestaMDB>(`/discover/movie?primary_release_date.gte=${inicio}&primary_release_date.lte=${fin}`);
   
+  }
+
+  getPeliculaDetalle(id: string) {
+
+    return this.ejecutarQuery<PeliculaDetalle>(`/movie/${ id }?a=1`);
+
+  }
+
+  getActores(id: string) {
+
+    return this.ejecutarQuery<Actores>(`/movie/${ id }/credits?a=1`);
+
   }
 }
