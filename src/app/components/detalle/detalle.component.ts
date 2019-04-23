@@ -20,7 +20,7 @@ export class DetalleComponent implements OnInit {
   };
 
   constructor(private moviesService: MoviesService,
-            public modalController: ModalController) { }
+    public modalController: ModalController) { }
 
   ngOnInit() {
     console.log('ID', this.id);
@@ -29,20 +29,20 @@ export class DetalleComponent implements OnInit {
       // console.log(data);
 
       this.pelicula = data;
-      
+
     })
 
     this.moviesService.getActores(this.id).subscribe(data => {
       console.log(data);
 
-      this.actores  = data.cast;
-      
+      this.actores = data.cast;
+
     })
-   
-    
+
+
   }
 
-  regresar(){
+  regresar() {
 
 
     this.modalController.dismiss();
@@ -50,7 +50,7 @@ export class DetalleComponent implements OnInit {
 
 
   }
-  favorito(){
+  favorito() {
 
   }
 

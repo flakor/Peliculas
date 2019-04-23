@@ -22,9 +22,6 @@ export interface Pelicula {
   release_date: string;
 }
 
-
-
-
 export interface PeliculaDetalle {
   adult?: boolean;
   backdrop_path?: string;
@@ -101,3 +98,5 @@ export interface Cast {
   order?: number;
   profile_path?: string;
 }
+
+
